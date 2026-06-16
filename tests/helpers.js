@@ -31,4 +31,19 @@ async function crearUsuarioPorAPI(request) {
   return usuario;
 }
 
-module.exports = { API, WEB, generarUsuario, crearUsuarioPorAPI };
+module.exports = {
+  API,
+  WEB,
+  generarUsuario,
+  crearUsuarioPorAPI,
+  completePurchaseForm,
+};
+
+async function completePurchaseForm(page) {
+  await page.fill('#name', 'Ariana Roda');
+  await page.fill('#country', 'Argentina');
+  await page.fill('#city', 'Tucuman');
+  await page.fill('#card', '4111111111111119');
+  await page.fill('#month', '06');
+  await page.fill('#year', '2026');
+}

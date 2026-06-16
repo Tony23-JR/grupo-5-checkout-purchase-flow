@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { completePurchaseForm } from '../helpers';
 
 test('Compra exitosa en Demoblaze con confirmación', async ({ page }) => {
   await page.goto('https://www.demoblaze.com/');
@@ -6,6 +7,7 @@ test('Compra exitosa en Demoblaze con confirmación', async ({ page }) => {
   await expect(page.getByText('CATEGORIES')).toBeVisible();
 
   const productTitles = page.locator('#tbodyid .card-title');
+  await expect(productTitles.first()).toBeVisible();
   const productCount = await productTitles.count();
   expect(productCount).toBeGreaterThan(0);
 
@@ -24,6 +26,8 @@ test('Compra exitosa en Demoblaze con confirmación', async ({ page }) => {
   await page.click('text=Add to cart');
 
   await page.click('#cartur');
+  await page.waitForURL(/cart.html/);
+  await expect(page.locator('#tbodyid')).toBeVisible();
   await expect(
     page.locator('td', { hasText: selectedProductName }),
   ).toBeVisible();
@@ -31,12 +35,8 @@ test('Compra exitosa en Demoblaze con confirmación', async ({ page }) => {
   await page.click('button[data-target="#orderModal"]');
   await expect(page.locator('#orderModal')).toBeVisible();
 
-  await page.fill('#name', 'Ariana Roda');
-  await page.fill('#country', 'Argentina');
-  await page.fill('#city', 'Tucuman');
-  await page.fill('#card', '4111111111111119');
-  await page.fill('#month', '06');
-  await page.fill('#year', '2026');
+  await completePurchaseForm(page);
+
   await page.click('button[onclick="purchaseOrder()"]');
 
   await expect(page.locator('.sweet-alert h2')).toHaveText(
