@@ -7,43 +7,47 @@
  */
 
 // URLs base
-const API = 'https://api.demoblaze.com';
-const WEB = 'https://www.demoblaze.com';
+export const API = 'https://api.demoblaze.com';
+export const WEB = 'https://www.demoblaze.com';
 
-/**
- * Genera un usuario unico usando la fecha actual.
- * Asi nunca choca con "usuario ya existe".
- */
-function generarUsuario() {
+export function generarUsuario() {
   return {
     username: `alumno_${Date.now()}`,
     password: 'bootcamp123',
   };
 }
 
-/**
- * Crea un usuario por API. Devuelve las credenciales usadas.
- * Util para el setup de tests E2E.
- */
-async function crearUsuarioPorAPI(request) {
+export async function crearUsuarioPorAPI(request) {
   const usuario = generarUsuario();
-  await request.post(`${API}/signup`, { data: usuario });
+
+  await request.post(`${API}/signup`, {
+    data: usuario,
+  });
+
   return usuario;
 }
 
-module.exports = {
-  API,
-  WEB,
-  generarUsuario,
-  crearUsuarioPorAPI,
-  completePurchaseForm,
-};
-
-async function completePurchaseForm(page) {
+export async function completePurchaseForm(page) {
   await page.fill('#name', 'Ariana Roda');
   await page.fill('#country', 'Argentina');
   await page.fill('#city', 'Tucuman');
   await page.fill('#card', '4111111111111119');
   await page.fill('#month', '06');
   await page.fill('#year', '2026');
+}
+
+export async function addProductToCart(page) {
+  await page.goto(WEB);
+
+  page.once('dialog', async (dialog) => {
+    await dialog.accept();
+  });
+
+  await page.locator('.card-title').first().click();
+
+  await page.getByText('Add to cart').click();
+
+  await page.waitForTimeout(2000);
+
+  await page.locator('#cartur').click();
 }

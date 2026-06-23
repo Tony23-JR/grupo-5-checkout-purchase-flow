@@ -1,47 +1,73 @@
 # Playwright Bootcamp - Proyecto Final
 
-Suite de tests automatizados sobre **DemoBlaze** usando Playwright.
+Suite de pruebas automatizadas sobre DemoBlaze utilizando Playwright para validar el flujo de compra (Checkout / Purchase Flow).
 
-> QA Automation Bootcamp - Rolling Code School - Tucuman
+> QA Automation Bootcamp - Rolling Code School - Tucumán
 
 ---
 
 ## Integrantes
 
-> Completen con los nombres de su grupo:
+* Antonio Rotger
+* Ariana Martinez
+* Germán Azcurra Roda
+* Rocío Arreguez
 
-- Nombre Apellido
-- Nombre Apellido
-- Nombre Apellido
-
-**Grupo N - Seccion asignada:** (ej: Cart Management)
-
----
-
-## Tecnologias
-
-- [Playwright](https://playwright.dev/) - Framework de automatizacion
-- Node.js - Runtime de JavaScript
-- JavaScript - Lenguaje
+**Grupo 5 - Sección asignada:** Purchase Flow (Checkout)
 
 ---
 
-## Instalacion
+## Descripción del Proyecto
 
-1. Cloná el repositorio:
+Este proyecto tiene como objetivo automatizar los casos de prueba correspondientes al flujo de compra de DemoBlaze, validando que un usuario pueda completar exitosamente una compra desde el carrito de compras.
+
+Los escenarios automatizados cubren:
+
+* Apertura del modal "Place Order"
+* Completar formulario de compra con datos válidos
+* Finalización exitosa de la compra
+* Visualización del mensaje de confirmación
+* Validación de comportamiento con formulario vacío
+
+---
+
+## Casos de Prueba Automatizados
+
+| ID   | Descripción                                  |
+| ---- | -------------------------------------------- |
+| TC01 | Abrir modal Place Order                      |
+| TC02 | Completar formulario con datos válidos       |
+| TC03 | Purchase exitosa con mensaje de confirmación |
+| TC04 | Validar mensaje de éxito visible             |
+| TC05 | Formulario vacío no completa la compra       |
+
+---
+
+## Tecnologías
+
+* Playwright - Framework de automatización
+* Node.js - Runtime de JavaScript
+* JavaScript - Lenguaje de programación
+* Git & GitHub - Control de versiones
+
+---
+
+## Instalación
+
+1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/TU-USUARIO/TU-REPO.git
-cd TU-REPO
+git clone https://github.com/Tony23-JR/grupo-5-checkout-purchase-flow.git
+cd grupo-5-purchase-flow
 ```
 
-2. Instalá las dependencias:
+2. Instalar dependencias:
 
 ```bash
 npm install
 ```
 
-3. Instalá los navegadores de Playwright:
+3. Instalar navegadores de Playwright:
 
 ```bash
 npx playwright install
@@ -49,66 +75,54 @@ npx playwright install
 
 ---
 
-## Como ejecutar los tests
+## Ejecución de Tests
 
 ```bash
-# Correr TODOS los tests
+# Ejecutar todos los tests
 npm test
 
-# Correr solo los tests de API
+# Ejecutar tests API
 npm run test:api
 
-# Correr solo los tests de UI
+# Ejecutar tests UI
 npm run test:ui
 
-# Correr solo los tests E2E
+# Ejecutar tests E2E
 npm run test:e2e
 
-# Correr mostrando el navegador (modo headed)
+# Ejecutar en modo headed
 npm run test:headed
 
-# Ver el reporte HTML del ultimo run
+# Visualizar reporte HTML
 npm run report
 ```
 
 ---
 
-## Estructura del proyecto
+## Estructura del Proyecto
 
-```
+```text
 tests/
-├── api/      → tests de API (usan request, no abren navegador)
-├── ui/       → tests de UI (usan page, abren navegador)
-├── e2e/      → tests E2E Fullstack (combinan API + UI)
-└── helpers.js → constantes y funciones compartidas
+├── api/
+├── ui/
+├── e2e/
+└── helpers.js
 ```
 
-### Regla para no pisarse
+---
 
-- Los archivos **`.api.spec.js`** solo usan `request`.
-- Los archivos **`.ui.spec.js`** solo usan `page`.
-- Los archivos **`.e2e.spec.js`** usan `request + page`.
+## Alcance del Proyecto
 
-Cada test crea sus propios datos con `Date.now()`, así son independientes
-y no dependen del estado que dejó otro test.
+La automatización se enfoca en el módulo Checkout / Purchase de DemoBlaze, validando tanto el comportamiento esperado del formulario de compra como la correcta confirmación de una orden generada por el usuario.
 
 ---
 
-## Notas tecnicas sobre DemoBlaze
-
-- El **login por UI puede bloquearse** con Playwright. Si necesitan un
-  usuario logueado, créenlo y logueen **por API** (ver `helpers.js`).
-- La API solo permite **vaciar el carrito completo** (`/deletecart`),
-  no eliminar un producto individual. Para eso, usen la UI.
-- `/login` devuelve **texto** (no JSON): usar `response.text()`.
-- `/signup` devuelve **string vacío** cuando sale bien.
-
----
-
-## Convenciones de commits
+## Convenciones de Commits
 
 ```bash
-git commit -m "TC01: Signup exitoso implementado"
-git commit -m "TC02: Validacion usuario duplicado"
-git commit -m "Fix: corregir locator del modal de login"
+git commit -m "TC01: implement open place order modal"
+git commit -m "TC02: implement purchase form validation"
+git commit -m "TC03: implement successful purchase flow"
+git commit -m "TC04: validate confirmation message"
+git commit -m "TC05: validate empty purchase form"
 ```
